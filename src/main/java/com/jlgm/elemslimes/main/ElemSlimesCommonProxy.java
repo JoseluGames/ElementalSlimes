@@ -1,5 +1,7 @@
 package com.jlgm.elemslimes.main;
 
+import com.jlgm.elemslimes.entity.ElemSlimesEntities;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -14,7 +16,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class ElemSlimesCommonProxy{
 
 	public void preInit(FMLPreInitializationEvent preInitEvent){
-		
+		ElemSlimesEntities.init();
 	}
 	
 	@SubscribeEvent
