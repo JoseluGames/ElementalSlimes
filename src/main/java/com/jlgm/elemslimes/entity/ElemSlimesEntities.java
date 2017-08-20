@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ElemSlimesEntities {
 	public static void init() {
 		int id = 1;
-		EntityRegistry.registerModEntity(new ResourceLocation("elementalslime"), EntityElementalSlime.class, "ElementalSlime", id++, ElemSlimesMain.instance, 64, 3, true, 0x996600, 0x00ff00);
+		EntityRegistry.registerModEntity(new ResourceLocation("elementalslime"), EntityElementalSlime.class, "ElementalSlime", id++, ElemSlimesMain.instance, 64, 3, true);
 		//LootTableList.register(EntityElementalSlime.LOOT);
 	}
 	

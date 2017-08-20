@@ -1,6 +1,7 @@
 package com.jlgm.elemslimes.main;
 
 import com.jlgm.elemslimes.entity.ElemSlimesEntities;
+import com.jlgm.elemslimes.item.ElemSlimesItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -26,7 +27,7 @@ public class ElemSlimesCommonProxy{
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event){
-		
+		ElemSlimesItem.registerItems(event);
 	}
 	
 
