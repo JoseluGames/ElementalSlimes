@@ -1,7 +1,9 @@
 package com.jlgm.elemslimes.main;
 
+import com.jlgm.elemslimes.block.ElemSlimesBlock;
 import com.jlgm.elemslimes.entity.ElemSlimesEntities;
 import com.jlgm.elemslimes.item.ElemSlimesItem;
+import com.jlgm.elemslimes.tileentity.ElemSlimesTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,15 +20,17 @@ public class ElemSlimesCommonProxy{
 
 	public void preInit(FMLPreInitializationEvent preInitEvent){
 		ElemSlimesEntities.init();
+		ElemSlimesTileEntity.registerTileEntity();
 	}
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event){
-		
+		ElemSlimesBlock.registerBlocks(event);
 	}
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event){
+		ElemSlimesBlock.registerItemBlocks(event);
 		ElemSlimesItem.registerItems(event);
 	}
 	

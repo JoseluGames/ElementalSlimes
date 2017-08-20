@@ -1,5 +1,6 @@
 package com.jlgm.elemslimes.main;
 
+import com.jlgm.elemslimes.block.ElemSlimesBlock;
 import com.jlgm.elemslimes.entity.ElemSlimesEntities;
 import com.jlgm.elemslimes.item.ElemSlimesItem;
 
@@ -18,6 +19,7 @@ public class ElemSlimesClientProxy extends ElemSlimesCommonProxy{
 	@Override
 	public void init(FMLInitializationEvent initEvent){
 		super.init(initEvent);
+		ElemSlimesBlock.renderBlock();
 		ElemSlimesItem.renderItem();
 	}
 
