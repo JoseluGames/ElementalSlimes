@@ -2,6 +2,7 @@ package com.jlgm.elemslimes.entity;
 
 import com.jlgm.elemslimes.client.renderer.entity.RenderElementalSlime;
 import com.jlgm.elemslimes.entity.monster.EntityElementalSlime;
+import com.jlgm.elemslimes.lib.ElemSlimesConstants;
 import com.jlgm.elemslimes.main.ElemSlimesMain;
 
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ElemSlimesEntities {
 	public static void init() {
 		int id = 1;
-		EntityRegistry.registerModEntity(new ResourceLocation("elementalslime"), EntityElementalSlime.class, "ElementalSlime", id++, ElemSlimesMain.instance, 64, 3, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(ElemSlimesConstants.MODID, "elementalslime"), EntityElementalSlime.class, "ElementalSlime", id++, ElemSlimesMain.instance, 64, 3, true);
 		//LootTableList.register(EntityElementalSlime.LOOT);
 	}
 	
