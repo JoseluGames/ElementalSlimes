@@ -3,7 +3,7 @@ package com.jlgm.elemslimes.item;
 import javax.annotation.Nullable;
 
 import com.jlgm.elemslimes.entity.monster.EntityElementalSlime;
-import com.jlgm.elemslimes.entity.monster.EntityElementalSlime.EnumSlimeTypes;
+import com.jlgm.elemslimes.lib.EnumElemSlimesTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -27,7 +27,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -78,7 +77,7 @@ public class ItemElemSlimesEgg extends ItemMonsterPlacer{
 
             BlockPos blockpos = pos.offset(facing);
             double d0 = this.getYOffset(worldIn, blockpos);
-            Entity entity = spawnCreature(worldIn, /*getNamedIdFrom(itemstack),*/ itemstack.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + d0, (double)blockpos.getZ() + 0.5D);
+            Entity entity = spawnCreature(worldIn, itemstack.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + d0, (double)blockpos.getZ() + 0.5D);
 
             if (entity != null)
             {
@@ -125,7 +124,7 @@ public class ItemElemSlimesEgg extends ItemMonsterPlacer{
                 }
                 else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.sideHit, itemstack))
                 {
-                    Entity entity = spawnCreature(worldIn, /*getNamedIdFrom(itemstack),*/ itemstack.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
+                    Entity entity = spawnCreature(worldIn, itemstack.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
 
                     if (entity == null)
                     {
@@ -166,42 +165,34 @@ public class ItemElemSlimesEgg extends ItemMonsterPlacer{
      * Parameters: world, entityID, x, y, z.
      */
     @Nullable
-    public static Entity spawnCreature(World worldIn, /*@Nullable ResourceLocation entityID,*/ int metadata, double x, double y, double z)
+    public static Entity spawnCreature(World worldIn, int metadata, double x, double y, double z)
     {
-        /*if (entityID != null && EntityList.ENTITY_EGGS.containsKey(entityID))
-        {*/
-            Entity entity = null;
+        Entity entity = null;
 
-            for (int i = 0; i < 1; ++i)
-            {
-            	entity = EntityList.newEntity(EntityElementalSlime.class, worldIn);
-                //entity = EntityList.createEntityByIDFromName(entityID, worldIn);
-
-                if (entity instanceof EntityLiving)
-                {
-                    EntityLiving entityliving = (EntityLiving)entity;
-                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(worldIn.rand.nextFloat() * 360.0F), 0.0F);
-                    entityliving.rotationYawHead = entityliving.rotationYaw;
-                    entityliving.renderYawOffset = entityliving.rotationYaw;
-                    entityliving.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
-                    EntityElementalSlime entitySlime = (EntityElementalSlime) entity;
-                    entitySlime.setType(EntityElementalSlime.EnumSlimeTypes.values()[metadata]);
-                    worldIn.spawnEntity(entitySlime);
-                    entityliving.playLivingSound();
-                }
-            }
-
-            return entity;
-        /*}
-        else
+        for (int i = 0; i < 1; ++i)
         {
-            return null;
-        }*/
+        	entity = EntityList.newEntity(EntityElementalSlime.class, worldIn);
+
+            if (entity instanceof EntityLiving)
+            {
+                EntityLiving entityliving = (EntityLiving)entity;
+                entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(worldIn.rand.nextFloat() * 360.0F), 0.0F);
+                entityliving.rotationYawHead = entityliving.rotationYaw;
+                entityliving.renderYawOffset = entityliving.rotationYaw;
+                entityliving.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
+                EntityElementalSlime entitySlime = (EntityElementalSlime) entity;
+                entitySlime.setType(EnumElemSlimesTypes.byID(metadata));
+                worldIn.spawnEntity(entitySlime);
+                entityliving.playLivingSound();
+            }
+        }
+
+        return entity;
     }
 	
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
         if (this.isInCreativeTab(tab)){
-            for (int i = 0; i < EntityElementalSlime.EnumSlimeTypes.values().length; ++i){
+            for (int i = 0; i < EnumElemSlimesTypes.getSize(); ++i){
                 items.add(new ItemStack(this, 1, i));
             }
         }
