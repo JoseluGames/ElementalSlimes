@@ -14,24 +14,27 @@ import net.minecraftforge.event.RegistryEvent;
 
 public class ElemSlimesBlock{
 	
-	public static Block corralBlock1_Block;
-	public static ItemBlock corralBlock1_ItemBlock;
+	public static Block corralBlockMaster_Block;
+	public static ItemBlock corralBlockMaster_ItemBlock;
+	
+	/*public static Block corralBlockScreen_Block;
+	public static ItemBlock corralBlockScreen_ItemBlock;*/
 	
 	public static void registerBlocks(RegistryEvent.Register<Block> event){
-		corralBlock1_Block = new BlockCorralBlock1(Material.ROCK).setUnlocalizedName("corralblock1").setHardness(0.7F).setResistance(0.5F).setCreativeTab(CreativeTabs.REDSTONE);
-		event.getRegistry().register(corralBlock1_Block.setRegistryName("corralblock1"));
+		corralBlockMaster_Block = new BlockCorralMaster(Material.ROCK).setUnlocalizedName("corralmaster").setHardness(0.7F).setResistance(0.5F).setCreativeTab(CreativeTabs.REDSTONE);
+		event.getRegistry().register(corralBlockMaster_Block.setRegistryName("corralmaster"));
 	}
 
 	public static void registerItemBlocks(RegistryEvent.Register<Item> event){
-		corralBlock1_ItemBlock = new ItemBlock(corralBlock1_Block);
-		event.getRegistry().register(corralBlock1_ItemBlock.setRegistryName(corralBlock1_Block.getRegistryName()));
+		corralBlockMaster_ItemBlock = new ItemBlock(corralBlockMaster_Block);
+		event.getRegistry().register(corralBlockMaster_ItemBlock.setRegistryName(corralBlockMaster_Block.getRegistryName()));
 	}
 	
 	public static void renderBlock(){
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 		
-		renderItem.getItemModelMesher().register(corralBlock1_ItemBlock, 0,
-				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "corralblock1", "inventory"));
+		renderItem.getItemModelMesher().register(corralBlockMaster_ItemBlock, 0,
+				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "corralmaster", "inventory"));
 		
 	}
 }
