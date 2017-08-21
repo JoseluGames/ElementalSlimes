@@ -3,69 +3,50 @@ package com.jlgm.elemslimes.tileentity;
 import java.awt.List;
 import java.util.ArrayList;
 
+import net.minecraft.block.BlockPane;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityCorralMaster extends TileEntity{
-	public void checkForCorral(EnumFacing facing) {
+	public boolean checkForCorral(EnumFacing facing) {
 		//Check for poles
-		int longDistance = 6;
-		int shortDistance = 3;
-		
-		if(facing.getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE) {
-			longDistance *= -1;
+		ArrayList<BlockPos> listOfPoles = new ArrayList<BlockPos>();
+		for(BlockPos pos : BlockPos.getAllInBox(pos.offset(facing.rotateY(), 3).up(3), pos.offset(facing.rotateY(), 3))) {
+			listOfPoles.add(pos);
+		}
+		for(BlockPos pos : BlockPos.getAllInBox(pos.offset(facing.rotateYCCW(), 3).up(3), pos.offset(facing.rotateYCCW(), 3))) {
+			listOfPoles.add(pos);
+		}
+		for(BlockPos pos : BlockPos.getAllInBox(pos.offset(facing, 6).offset(facing.rotateY(), 3).up(3), pos.offset(facing, 6).offset(facing.rotateY(), 3))) {
+			listOfPoles.add(pos);
+		}
+		for(BlockPos pos : BlockPos.getAllInBox(pos.offset(facing, 6).offset(facing.rotateYCCW(), 3).up(3), pos.offset(facing, 6).offset(facing.rotateYCCW(), 3))) {
+			listOfPoles.add(pos);
 		}
 		
-		if(facing.getAxis() == EnumFacing.Axis.X) {
-			ArrayList<BlockPos> listOfPoles = new ArrayList<BlockPos>();
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() - shortDistance, this.getPos().getX(), this.getPos().getY() + 3, this.getPos().getZ() - shortDistance)) {
-				listOfPoles.add(pos);
+		for(BlockPos pos : listOfPoles) {
+			if(!this.getWorld().getBlockState(pos).isNormalCube()) {
+				System.out.println("POLES failed " + pos);
+				return false;
 			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ() + shortDistance, this.getPos().getX(), this.getPos().getY() + 3, this.getPos().getZ() + shortDistance)) {
-				listOfPoles.add(pos);
-			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() + longDistance, this.getPos().getY(), this.getPos().getZ() - shortDistance, this.getPos().getX() + longDistance, this.getPos().getY() + 3, this.getPos().getZ() - shortDistance)) {
-				listOfPoles.add(pos);
-			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() + longDistance, this.getPos().getY(), this.getPos().getZ() + shortDistance, this.getPos().getX() + longDistance, this.getPos().getY() + 3, this.getPos().getZ() + shortDistance)) {
-				listOfPoles.add(pos);
-			}
-			
-			/*for(BlockPos pos : listOfPoles) {
-				System.out.println(this.world.getBlockState(pos).getBlock());
-			}*/
-			
-		} else if(facing.getAxis() == EnumFacing.Axis.Z) {
-			ArrayList<BlockPos> listOfPoles = new ArrayList<BlockPos>();
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() - shortDistance, this.getPos().getY(), this.getPos().getZ(), this.getPos().getX() - shortDistance, this.getPos().getY() + 3, this.getPos().getZ())) {
-				listOfPoles.add(pos);
-			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() + shortDistance, this.getPos().getY(), this.getPos().getZ(), this.getPos().getX() + shortDistance, this.getPos().getY() + 3, this.getPos().getZ())) {
-				listOfPoles.add(pos);
-			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() - shortDistance, this.getPos().getY(), this.getPos().getZ() + longDistance, this.getPos().getX() - shortDistance, this.getPos().getY() + 3, this.getPos().getZ() + longDistance)) {
-				listOfPoles.add(pos);
-			}
-			for(BlockPos pos : BlockPos.getAllInBox(this.getPos().getX() + shortDistance, this.getPos().getY(), this.getPos().getZ() + longDistance, this.getPos().getX() + shortDistance, this.getPos().getY() + 3, this.getPos().getZ() + longDistance)) {
-				listOfPoles.add(pos);
-			}
-			
-			/*for(BlockPos pos : listOfPoles) {
-				System.out.println(this.world.getBlockState(pos).getBlock());
-			}*/
 		}
 		
-		//Check for screens
+		//Check for screensº
 		ArrayList<BlockPos> listOfScreens = new ArrayList<BlockPos>();
 		listOfScreens.add(pos.up());
 		listOfScreens.add(pos.offset(facing.rotateY()));
 		listOfScreens.add(pos.offset(facing.rotateYCCW()));
 		listOfScreens.add(pos.offset(facing.rotateY()).up());
 		listOfScreens.add(pos.offset(facing.rotateYCCW()).up());
-		/*for(BlockPos pos : listOfScreens) {
-			System.out.println(this.world.getBlockState(pos).getBlock());
-		}*/
+		
+		for(BlockPos pos : listOfScreens) {
+			if(this.world.getBlockState(pos).getBlock() != Blocks.STONEBRICK) {
+				System.out.println("SCREENS failed");
+				return false;
+			}
+		}
 		
 		//Check for panels
 		//FRONT
@@ -105,45 +86,38 @@ public class TileEntityCorralMaster extends TileEntity{
 		listOfPanels.add(pos.offset(facing, 3).offset(facing.rotateYCCW(), 3).offset(facing.getOpposite(), 2));
 		listOfPanels.add(pos.offset(facing, 3).offset(facing.rotateYCCW(), 3).offset(facing.getOpposite(), 1));
 		
-		/*for(BlockPos pos : listOfPanels) {
-			System.out.println(this.world.getBlockState(pos).getBlock());
-		}*/
+		for(BlockPos pos : listOfPanels) {
+			if(!(this.world.getBlockState(pos).getBlock() instanceof BlockPane)) {
+				System.out.println("PANELS failed");
+				return false;
+			}
+		}
 		
 		ArrayList<BlockPos> listOfInputs = new ArrayList<BlockPos>();
 		listOfInputs.add(pos.offset(facing, 6));
 		listOfInputs.add(pos.offset(facing, 3).offset(facing.rotateY(), 3));
 		listOfInputs.add(pos.offset(facing, 3).offset(facing.rotateYCCW(), 3));
 		
-		/*for(BlockPos pos : listOfInputs) {
-			System.out.println(this.world.getBlockState(pos).getBlock());
-		}*/
+		for(BlockPos pos : listOfInputs) {
+			if(this.world.getBlockState(pos).getBlock() != Blocks.STONEBRICK) {
+				System.out.println("INPUTS failed");
+				return false;
+			}
+		}
 		
+		ArrayList<BlockPos> listOfAirInside = new ArrayList<BlockPos>();
+		for(BlockPos pos : BlockPos.getAllInBox(pos.offset(facing, 5).offset(facing.rotateY(), 2).up(4), pos.offset(facing, 1).offset(facing.rotateYCCW(), 2))) {
+			listOfAirInside.add(pos);
+		}
 		
+		for(BlockPos pos : listOfAirInside) {
+			if(this.world.getBlockState(pos).getBlock() != Blocks.AIR) {
+				System.out.println("INSIDE failed");
+				return false;
+			}
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println("Corral succesful");
+		return true;
 	}
 }
