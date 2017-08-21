@@ -3,6 +3,8 @@ package com.jlgm.elemslimes.tileentity;
 import java.awt.List;
 import java.util.ArrayList;
 
+import com.jlgm.elemslimes.block.ElemSlimesBlock;
+
 import net.minecraft.block.BlockPane;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +12,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityCorralMaster extends TileEntity{
+	
+	
+	
 	public boolean checkForCorral(EnumFacing facing) {
 		//Check for poles
 		ArrayList<BlockPos> listOfPoles = new ArrayList<BlockPos>();
@@ -28,12 +33,12 @@ public class TileEntityCorralMaster extends TileEntity{
 		
 		for(BlockPos pos : listOfPoles) {
 			if(!this.getWorld().getBlockState(pos).isNormalCube()) {
-				System.out.println("POLES failed " + pos);
+				System.out.println("POLES failed at " + pos);
 				return false;
 			}
 		}
 		
-		//Check for screensº
+		//Check for screens
 		ArrayList<BlockPos> listOfScreens = new ArrayList<BlockPos>();
 		listOfScreens.add(pos.up());
 		listOfScreens.add(pos.offset(facing.rotateY()));
@@ -42,8 +47,8 @@ public class TileEntityCorralMaster extends TileEntity{
 		listOfScreens.add(pos.offset(facing.rotateYCCW()).up());
 		
 		for(BlockPos pos : listOfScreens) {
-			if(this.world.getBlockState(pos).getBlock() != Blocks.STONEBRICK) {
-				System.out.println("SCREENS failed");
+			if(this.world.getBlockState(pos).getBlock() != ElemSlimesBlock.corralBlockScreen_Block) {
+				System.out.println("SCREENS failed at " + pos);
 				return false;
 			}
 		}
@@ -88,19 +93,19 @@ public class TileEntityCorralMaster extends TileEntity{
 		
 		for(BlockPos pos : listOfPanels) {
 			if(!(this.world.getBlockState(pos).getBlock() instanceof BlockPane)) {
-				System.out.println("PANELS failed");
+				System.out.println("PANELS failed at " + pos);
 				return false;
 			}
 		}
 		
-		ArrayList<BlockPos> listOfInputs = new ArrayList<BlockPos>();
-		listOfInputs.add(pos.offset(facing, 6));
-		listOfInputs.add(pos.offset(facing, 3).offset(facing.rotateY(), 3));
-		listOfInputs.add(pos.offset(facing, 3).offset(facing.rotateYCCW(), 3));
+		ArrayList<BlockPos> listOfIOs = new ArrayList<BlockPos>();
+		listOfIOs.add(pos.offset(facing, 6));
+		listOfIOs.add(pos.offset(facing, 3).offset(facing.rotateY(), 3));
+		listOfIOs.add(pos.offset(facing, 3).offset(facing.rotateYCCW(), 3));
 		
-		for(BlockPos pos : listOfInputs) {
-			if(this.world.getBlockState(pos).getBlock() != Blocks.STONEBRICK) {
-				System.out.println("INPUTS failed");
+		for(BlockPos pos : listOfIOs) {
+			if(this.world.getBlockState(pos).getBlock() != ElemSlimesBlock.corralBlockIO_Block) {
+				System.out.println("IO failed at " + pos);
 				return false;
 			}
 		}
@@ -112,7 +117,7 @@ public class TileEntityCorralMaster extends TileEntity{
 		
 		for(BlockPos pos : listOfAirInside) {
 			if(this.world.getBlockState(pos).getBlock() != Blocks.AIR) {
-				System.out.println("INSIDE failed");
+				System.out.println("INSIDE failed at " + pos);
 				return false;
 			}
 		}

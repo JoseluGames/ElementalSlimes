@@ -1,5 +1,8 @@
 package com.jlgm.elemslimes.lib;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTableList;
+
 public enum EnumElemSlimesTypes {
 	COAL("coal", 0),
 	IRON("iron", 1),
@@ -18,12 +21,20 @@ public enum EnumElemSlimesTypes {
 		this.id = id;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String getSlimeName() {
-		return this.name + "_slime";
+		return "elementalslime_" + this.name;
 	}
 
 	public String getPlortName() {
-		return this.name + "_plort";
+		return "plort_" + this.name;
+	}
+	
+	public ResourceLocation getLootTable() {
+		return new ResourceLocation(ElemSlimesConstants.MODID, "entities/elementalslime/" + this.name);
 	}
 	
 	public int getID() {
@@ -36,5 +47,11 @@ public enum EnumElemSlimesTypes {
 	
 	public static int getSize() {
 		return EnumElemSlimesTypes.values().length;
+	}
+	
+	public static void registerLoots() {
+		for(int i = 0; i < EnumElemSlimesTypes.getSize(); i++) {
+			LootTableList.register(new ResourceLocation(ElemSlimesConstants.MODID, "entities/elementalslime/" + EnumElemSlimesTypes.byID(i).getName()));
+		}
 	}
 }

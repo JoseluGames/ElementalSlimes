@@ -1,6 +1,7 @@
 package com.jlgm.elemslimes.block;
 
 import com.jlgm.elemslimes.tileentity.TileEntityCorralMaster;
+import com.jlgm.elemslimes.tileentity.TileEntityCorralScreen;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,9 +14,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCorralMaster extends BlockContainer{
+public class BlockCorralScreen extends BlockContainer{
 	
-	protected BlockCorralMaster(Material materialIn) {
+	protected BlockCorralScreen(Material materialIn) {
 		super(materialIn);
 	}
 	
@@ -30,24 +31,6 @@ public class BlockCorralMaster extends BlockContainer{
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityCorralMaster();
+		return new TileEntityCorralScreen();
 	}
-	
-	@Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-		if(worldIn.getTileEntity(pos) != null) {
-			
-			if(facing == facing.DOWN || facing == facing.UP) {
-				System.out.println("That's not a valid side to check structure");
-				return false;
-			}
-			
-	        TileEntityCorralMaster tileEntity = (TileEntityCorralMaster) worldIn.getTileEntity(pos);
-	        tileEntity.checkForCorral(facing.getOpposite());
-			
-			return true;
-		}else {
-			return false;
-		}
-    }
 }
