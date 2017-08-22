@@ -16,7 +16,6 @@ public class ElemSlimesEntities {
 	public static void init() {
 		int id = 1;
 		EntityRegistry.registerModEntity(new ResourceLocation(ElemSlimesConstants.MODID, "elementalslime"), EntityElementalSlime.class, "ElementalSlime", id++, ElemSlimesMain.instance, 64, 3, true);
-		//LootTableList.register(EntityElementalSlime.LOOT);
 	}
 	
 	@SideOnly(Side.CLIENT)

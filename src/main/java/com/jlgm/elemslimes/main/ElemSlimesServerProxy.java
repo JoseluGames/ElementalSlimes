@@ -1,9 +1,11 @@
 package com.jlgm.elemslimes.main;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
+@Mod.EventBusSubscriber
 public class ElemSlimesServerProxy extends ElemSlimesCommonProxy{
 
 	@Override

@@ -30,7 +30,7 @@ public class EntityElementalSlime extends EntitySlime{
 	
 	@Nullable
 	protected ResourceLocation getLootTable(){
-		return EnumElemSlimesTypes.byID(this.dataManager.get(SLIME_TYPE)).getLootTable();
+		return this.getSlimeSize() == 1 ? EnumElemSlimesTypes.byID(this.dataManager.get(SLIME_TYPE)).getLootTable() : LootTableList.EMPTY;
     }
 	
 	public void setType(EnumElemSlimesTypes type) {

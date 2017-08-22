@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ElemSlimesItem {
@@ -23,15 +24,12 @@ public class ElemSlimesItem {
 		event.getRegistry().register(plort_Item.setRegistryName("plort"));
 	}
 	
-	public static void renderItem(){
-		System.out.println("asdfASDFOIMQWEOI2M3RO9ASDFM9Q834CM 98M3Y9 2384Y Q92378Y 923Y 9237R 3789 ");
-		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		
-		renderItem.getItemModelMesher().register(elemSlimesEgg_Item, 0,
-				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "elemslimesegg", "inventory"));
-		
+	public static void renderItem() {
 		for(int i = 0; i < EnumElemSlimesTypes.getSize(); i++) {
-			renderItem.getItemModelMesher().register(plort_Item, i,
+			ModelLoader.setCustomModelResourceLocation(elemSlimesEgg_Item, i,
+					new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "elemslimesegg"/*EnumElemSlimesTypes.byID(i).getPlortName()*/, "inventory"));
+			
+			ModelLoader.setCustomModelResourceLocation(plort_Item, i,
 					new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + EnumElemSlimesTypes.byID(i).getPlortName(), "inventory"));
 		}
 	}

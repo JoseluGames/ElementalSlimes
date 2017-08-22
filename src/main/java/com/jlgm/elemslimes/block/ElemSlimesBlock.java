@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ElemSlimesBlock{
@@ -46,15 +47,13 @@ public class ElemSlimesBlock{
 	}
 	
 	public static void renderBlock(){
-		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		
-		renderItem.getItemModelMesher().register(corralBlockMaster_ItemBlock, 0,
+		ModelLoader.setCustomModelResourceLocation(corralBlockMaster_ItemBlock, 0,
 				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "corralmaster", "inventory"));
 		
-		renderItem.getItemModelMesher().register(corralBlockScreen_ItemBlock, 0,
+		ModelLoader.setCustomModelResourceLocation(corralBlockScreen_ItemBlock, 0,
 				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "corralscreen", "inventory"));
 		
-		renderItem.getItemModelMesher().register(corralBlockIO_ItemBlock, 0,
+		ModelLoader.setCustomModelResourceLocation(corralBlockIO_ItemBlock, 0,
 				new ModelResourceLocation(ElemSlimesConstants.MODID + ":" + "corralio", "inventory"));
 	}
 }

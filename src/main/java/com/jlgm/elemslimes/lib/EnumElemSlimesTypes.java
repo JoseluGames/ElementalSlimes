@@ -32,6 +32,10 @@ public enum EnumElemSlimesTypes {
 	public String getPlortName() {
 		return "plort_" + this.name;
 	}
+
+	public String getEggName() {
+		return "egg_" + this.name;
+	}
 	
 	public ResourceLocation getLootTable() {
 		return new ResourceLocation(ElemSlimesConstants.MODID, "entities/elementalslime/" + this.name);

@@ -4,6 +4,7 @@ import com.jlgm.elemslimes.block.ElemSlimesBlock;
 import com.jlgm.elemslimes.entity.ElemSlimesEntities;
 import com.jlgm.elemslimes.item.ElemSlimesItem;
 import com.jlgm.elemslimes.lib.ElemSlimesConstants;
+import com.jlgm.elemslimes.lib.EnumElemSlimesTypes;
 import com.jlgm.elemslimes.tileentity.ElemSlimesTileEntity;
 
 import net.minecraft.block.Block;
@@ -21,9 +22,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ElemSlimesCommonProxy{
 
 	public void preInit(FMLPreInitializationEvent preInitEvent){
-		
+		EnumElemSlimesTypes.registerLoots();
 		ElemSlimesEntities.init();
 		ElemSlimesTileEntity.registerTileEntity();
+	}
+	
+	public void init(FMLInitializationEvent initEvent){
+		
+	}
+
+	public void postInit(FMLPostInitializationEvent postInitEvent){
+
 	}
 	
 	@SubscribeEvent
@@ -35,14 +44,5 @@ public class ElemSlimesCommonProxy{
 	public static void registerItems(RegistryEvent.Register<Item> event){
 		ElemSlimesBlock.registerItemBlocks(event);
 		ElemSlimesItem.registerItems(event);
-	}
-	
-
-	public void init(FMLInitializationEvent initEvent){
-		
-	}
-
-	public void postInit(FMLPostInitializationEvent postInitEvent){
-
 	}
 }
